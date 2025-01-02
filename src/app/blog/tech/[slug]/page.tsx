@@ -1,46 +1,67 @@
+import fs from "fs";
+import path from "path";
 import { Metadata } from "next";
+import matter from "gray-matter";
+import { compileMDX } from "next-mdx-remote/rsc";
+import Button from "@/components/Button";
 
-// interface Props {
-//   params: {
-//     slug: string;
-//   };
-// }
+const category = "tech";
 
 export function generateMetadata({
   params,
 }: {
   params: { slug: string };
 }): Metadata {
+  const filePath = path.join(
+    process.cwd(),
+    `src/contents/${category}/${params.slug}.mdx`
+  );
+  const fileContent = fs.readFileSync(filePath, "utf8");
+  const { data } = matter(fileContent);
+
   return {
-    title: `Read about ${params.slug} | Tech Blog`,
-    description: `An article about ${params.slug} in the Tech category.`,
+    title: data.title || `Read about ${params.slug}`,
+    description:
+      data.description ||
+      `An article about ${params.slug} in the Tech category.`,
   };
 }
-
-// export default function TechArticlePage({ params }: Props) {
-//   const { slug } = params;
-
-//   return (
-//     <div>
-//       <h1>Tech Article: {slug}</h1>
-//       <p>This is the content for the article {slug}.</p>
-//     </div>
-//   );
-// }
 
 export default async function TechArticlePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const slug = (await params).slug;
-  const { default: Post } = await import(`@/contents/tech/${slug}.mdx`);
+  const filePath = path.join(
+    process.cwd(),
+    `src/contents/${category}/${params.slug}.mdx`
+  );
+  const fileContent = fs.readFileSync(filePath, "utf8");
 
-  return <Post />;
+  // 使用 gray-matter 解析 MDX 的 Frontmatter
+  const { content, data } = matter(fileContent);
+
+  // 使用 compileMDX 編譯 MDX 文件
+  const { content: MDXElement } = await compileMDX({
+    source: content,
+    components: { Button },
+  });
+
+  return (
+    <article>
+      <h1>{data.title}</h1>
+      <h3>Date: {data.date}</h3>
+      {MDXElement}
+    </article>
+  );
 }
 
 export function generateStaticParams() {
-  return [{ slug: "learn-html" }, { slug: "react-is-fun" }];
+  const files = fs.readdirSync(`src/contents/${category}`);
+  const data = files.map((file) => ({
+    slug: file.replace(".mdx", ""),
+  }));
+  return data;
 }
 
 export const dynamicParams = false;

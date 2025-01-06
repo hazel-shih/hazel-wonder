@@ -2,7 +2,9 @@ export const blogCategories = [
   "latest",
   "tech",
   "movie",
-  "ponder",
-  "healing",
+  // "ponder",
+  // "healing",
   "english",
 ];
+
+export const itemPerBlogPage = 7;

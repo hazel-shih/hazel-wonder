@@ -17,7 +17,7 @@ const HeaderLink: React.FC<HeaderLinkProperty> = ({ name, href }) => {
   return (
     <Link
       className={classNames("header-link", nunito.className, {
-        isActive: pathname === href,
+        isActive: pathname.includes(href),
       })}
       href={href}
     >

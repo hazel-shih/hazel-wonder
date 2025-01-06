@@ -12,11 +12,17 @@ const CategoryButtons = () => {
     <div className="category-buttons">
       {blogCategories.map((category) => (
         <FilterButton
-          isActive={category === "latest" ? true : category === pathname}
+          isActive={
+            category === "latest" && pathname === "/blog"
+              ? true
+              : pathname.includes(category)
+          }
           name={category.charAt(0).toUpperCase() + category.slice(1)}
           key={category}
           handleClick={() =>
-            router.push(category === "latest" ? "/blog" : `/blog/${category}`)
+            router.push(
+              category === "latest" ? "/blog" : `/blog/${category}/page/1`
+            )
           }
         />
       ))}

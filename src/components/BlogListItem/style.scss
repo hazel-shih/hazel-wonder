@@ -1,0 +1,25 @@
+.blog-list-item {
+  font-size: 16px;
+  padding: 28px 0;
+  display: block;
+
+  & > h3 {
+    color: var(--secondary);
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  & > h2 {
+    color: var(--primary);
+    font-size: 24px;
+    margin-bottom: 2px;
+  }
+
+  &:not(:last-child){
+    border-bottom: 1px solid #D8C4B6;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

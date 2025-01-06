@@ -1,99 +1,47 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
-import Button from "@/components/Button";
+import "./page.scss";
+import { nunito } from "@/fonts/configure";
+import { getLatestArticlesList } from "@/utils/getArticles";
+import Link from "next/link";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <h1>Hello, I am Hazel</h1>
-        <Button />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const articles = getLatestArticlesList(5);
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  return (
+    <main className="home">
+      <div>
+        <h1 className={nunito.className}>Hi, I&apos;m Hazel 👋🏻</h1>
+        <p>
+          喜歡思考、分享想法、有意識地生活。
+          <br />
+          我對很多事物充滿好奇，「想知道更多」就是我學習的理由。
+          <br />
+          在這邊分享關於技術、觀影、閱讀、日常生活所見所聞的想法，
+          <br />
+          如果你能從這裡發現你有興趣的東西那就太好了 : )
+        </p>
+      </div>
+
+      <div>
+        <h1 className={nunito.className}>
+          Recent Highlights<span className="ps">(01/03 updated)</span>
+        </h1>
+        <p>實踐於生活的信念：Stay fresh!</p>
+        <p>正在讀的書：《魅力學》by Olivia Fox Cabane</p>
+        <p>反覆循環的歌： Kendrick Lamar - luther</p>
+      </div>
+      <div>
+        <h1 className={nunito.className}>Latest Writings</h1>
+        {articles.map((article) => (
+          <Link
+            href={`/blog/${article.category}/${article.slug}`}
+            className="article-item"
+            key={article.slug}
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            <span className="date">{article.date}</span>
+            <p className="article-title">{article.title}</p>
+          </Link>
+        ))}
+      </div>
+    </main>
   );
 }

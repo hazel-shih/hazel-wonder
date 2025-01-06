@@ -1,0 +1,41 @@
+.home {
+  padding: 24px 0;
+
+  & > div {
+    margin-bottom: 30px;
+  }
+
+  & h1 {
+    color: var(--primary);
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  & p {
+    font-size: 18px;
+  }
+
+  & span {
+    color:  var(--primary);
+    margin-right: 10px;
+  }
+
+  & .ps {
+    font-size: 16px;
+    margin-left: 8px;
+  }
+
+  & .article-item {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+
+    & > .date {
+      color: var(--text-primary);
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

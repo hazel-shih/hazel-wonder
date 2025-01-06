@@ -3,11 +3,11 @@ import path from "path";
 import { Metadata } from "next";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
+import Button from "@/components/Button";
 import "./style.css";
 
-const category = "tech";
+const category = "movie";
 
-// can be plain object if not need fetch / dynamic
 export function generateMetadata({
   params,
 }: {
@@ -24,7 +24,7 @@ export function generateMetadata({
     title: data.title || `Read about ${params.slug}`,
     description:
       data.description ||
-      `An article about ${params.slug} in the Tech category.`,
+      `An article about ${params.slug} in the movie category.`,
   };
 }
 
@@ -45,6 +45,7 @@ export default async function TechArticlePage({
   // 使用 compileMDX 編譯 MDX 文件
   const { content: MDXElement } = await compileMDX({
     source: content,
+    components: { Button },
   });
 
   return (

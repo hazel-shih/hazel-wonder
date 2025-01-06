@@ -1,0 +1,37 @@
+.alert {
+  display: flex;
+  justify-content: left;
+  padding: 6px 16px;
+  width: 100%;
+  border-radius: 4px;
+
+  & > div {
+    margin-right: 12px;
+    padding: 11px 0px;
+  }
+
+  & > p {
+    font-size: 16px;
+    padding: 10px 0px;
+  }
+
+  &.info {
+    background-color: #e4f7fe;
+    color: #205a75;
+  }
+
+  &.success {
+    background-color: #edf7ed;
+    color: #1c4620;
+  }
+
+  &.warning {
+    background-color: #fff4e5;
+    color: #693f05;
+  }
+
+  &.error {
+    background-color: #fdeeed;
+    color: #5f211f;
+  }
+}

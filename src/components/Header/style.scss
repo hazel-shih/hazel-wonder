@@ -1,12 +1,11 @@
 header {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 
   & > nav {
     display: flex;
-    width: 90%;
     padding: 16px 0;
 
     & > .logo {

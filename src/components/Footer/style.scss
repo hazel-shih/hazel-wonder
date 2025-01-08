@@ -1,12 +1,11 @@
 footer {
   width: 100%;
   display: flex;
-  justify-content: center;
-  padding: 12px 0;
+  justify-content: left;
+  padding: 12px 0 12px 0;
 
   & > nav {
     text-align: left;
     color: var(--primary);
-    width: 90%;
   }
 }

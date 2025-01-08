@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
 import Button from "@/components/Button";
-import "./style.css";
+import "./style.scss";
 
 const category = "movie";
 

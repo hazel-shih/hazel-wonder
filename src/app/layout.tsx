@@ -17,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="zh">
       <body className={`${notoSansTc.className}`}>
-        <Header />
-        {children}
-        <Footer />
+        <main>
+          <Header />
+          {children}
+          <Footer />
+        </main>
       </body>
     </html>
   );

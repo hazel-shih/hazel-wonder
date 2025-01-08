@@ -3,8 +3,15 @@ import path from "path";
 import { Metadata } from "next";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
-import "./style.css";
-
+import Button from "@/components/Button";
+import {
+  InfoAlert,
+  SuccessAlert,
+  ErrorAlert,
+  WarningAlert,
+} from "@/components/Alerts";
+import "./style.scss";
+import BlogInsertImage from "@/components/BlogInsertImage";
 const category = "tech";
 
 // can be plain object if not need fetch / dynamic
@@ -28,6 +35,15 @@ export function generateMetadata({
   };
 }
 
+const components = {
+  Button,
+  InfoAlert,
+  SuccessAlert,
+  ErrorAlert,
+  WarningAlert,
+  BlogInsertImage,
+};
+
 export default async function TechArticlePage({
   params,
 }: {
@@ -45,13 +61,28 @@ export default async function TechArticlePage({
   // 使用 compileMDX 編譯 MDX 文件
   const { content: MDXElement } = await compileMDX({
     source: content,
+    components: components,
   });
 
   return (
-    <article>
-      <h1>{data.title}</h1>
-      <h3>Date: {data.date}</h3>
-      {MDXElement}
+    <article className="blog-article">
+      <header>
+        <h1>{data.title}</h1>
+        <time>{data.date}</time>
+        <div className="description">
+          <div className="line" />
+          <p>{data.description}</p>
+          <div className="line" />
+        </div>
+      </header>
+      <section className="content">
+        {data.picture && (
+          <figure className="first-picture">
+            <BlogInsertImage relativePath={data.picture} alt={data.alt} />
+          </figure>
+        )}
+        {MDXElement}
+      </section>
     </article>
   );
 }

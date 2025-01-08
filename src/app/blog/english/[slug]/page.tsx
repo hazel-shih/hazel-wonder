@@ -3,7 +3,7 @@ import path from "path";
 import { Metadata } from "next";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
-import "./style.css";
+import "./style.scss";
 
 const category = "tech";
 

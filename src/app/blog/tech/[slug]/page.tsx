@@ -12,6 +12,10 @@ import {
 } from "@/components/Alerts";
 import "./style.scss";
 import BlogInsertImage from "@/components/BlogInsertImage";
+import rehypeCodeTitles from "rehype-code-titles";
+import rehypePrism from "rehype-prism-plus";
+import rehypeHighlight from "rehype-highlight";
+
 const category = "tech";
 
 // can be plain object if not need fetch / dynamic
@@ -57,11 +61,19 @@ export default async function TechArticlePage({
 
   // 使用 gray-matter 解析 MDX 的 Frontmatter
   const { content, data } = matter(fileContent);
-
-  // 使用 compileMDX 編譯 MDX 文件
   const { content: MDXElement } = await compileMDX({
     source: content,
     components: components,
+    options: {
+      parseFrontmatter: true,
+      mdxOptions: {
+        rehypePlugins: [
+          rehypeCodeTitles,
+          rehypeHighlight,
+          [rehypePrism, { ignoreMissing: true }],
+        ],
+      },
+    },
   });
 
   return (

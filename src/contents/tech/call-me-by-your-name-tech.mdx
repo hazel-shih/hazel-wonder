@@ -19,9 +19,9 @@ alt: Oliver shake hands with Elio
   alt="Oliver is sad"
 />
 
-Elio 父親和他說的話讓我印象深刻： “Just remember, our hearts and our bodies are given
+Elio 父親和他說的話讓我印象深刻： `“Just remember, our hearts and our bodies are given
 to us only once and before you know it, your heart's worn out and as for your body,
-there comes a point when no one looks are much less wants to come near it.” 如果我們都認清自己總有一天身體與心都會老去且疲憊不堪，也理解在這宏大的世界遇見一個令你傾心不已的人是多麼不容易，我想問的是：`「下一次你願不願意做出不一樣的決定？」`
+there comes a point when no one looks are much less wants to come near it.”` 如果我們都認清自己總有一天身體與心都會老去且疲憊不堪，也理解在這宏大的世界遇見一個令你傾心不已的人是多麼不容易，我想問的是：`「下一次你願不願意做出不一樣的決定？」`
 喜歡一個人時，就專注在這份喜歡，若因為自己的驕傲與顧慮而選擇不深刻地去愛，那麼最喜歡的恐怕是自己而不是對方。
 要知道，一個人最偉大的能力，即是愛人的能力。
 
@@ -30,3 +30,29 @@ there comes a point when no one looks are much less wants to come near it.” �
 <ErrorAlert text="你好我是一個紅色的資訊欄喔！你比較像 Elio 還是 Oliver？ 昨晚的電影夜看了《以你的名字呼喚我》，有一幕 Elio 問 Oliver：「你為什麼不給我暗示？」" />
 
 <WarningAlert text="你好我是一個黃色的資訊欄喔！你比較像 Elio 還是 Oliver？ 昨晚的電影夜看了《以你的名字呼喚我》，有一幕 Elio 問 Oliver：「你為什麼不給我暗示？」" />
+
+## 來點程式碼
+
+```jsx:pages/index.tsx {1,3-5}
+export const SuccessAlert: React.FC<AlertProperty> = ({ text }) => {
+  return (
+    <div className="alert success">
+      <div>
+        <Image src={Check} width={22} height={22} alt="info-icon" />
+      </div>
+      <p>{text}</p>
+    </div>
+  );
+};
+
+export const WarningAlert: React.FC<AlertProperty> = ({ text }) => {
+  return (
+    <div className="alert warning">
+      <div>
+        <Image src={Warning} width={22} height={22} alt="info-icon" />
+      </div>
+      <p>{text}</p>
+    </div>
+  );
+};
+```

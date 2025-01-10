@@ -1,4 +1,4 @@
-import BlogCategoryList from "@/app/blog/layouts/BlogCategoryList/BlogCategoryList";
+import BlogCategoryList from "@/components/layouts/BlogCategoryList/BlogCategoryList";
 
 const category = "latest";
 

@@ -1,4 +1,4 @@
-import BlogCategoryList from "@/app/blog/layouts/BlogCategoryList/BlogCategoryList";
+import BlogCategoryList from "@/components/layouts/BlogCategoryList/BlogCategoryList";
 
 const category = "english";
 
@@ -12,7 +12,9 @@ const BlogEnglishListPage = ({ params }: { params: { pageNum: string } }) => {
           <p>
             「不練習永遠無法變得更好。」
             <br />
-            練習寫寫的英文短文，試著用英文說出想要表達的話。主題通常是描述一件事，還有短短的、隨機的想法
+            練習寫寫的英文短文，試著用英文說出想要表達的話。
+            <br />
+            主題通常是描述一件事，還有短短的、隨機的想法
           </p>
         </>
       }

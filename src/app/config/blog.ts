@@ -1,4 +1,4 @@
-export const blogCategories = [
+export const blogCategories: BlogCategories[] = [
   "latest",
   "tech",
   "movie",
@@ -6,5 +6,13 @@ export const blogCategories = [
   // "healing",
   "english",
 ];
+
+export type BlogCategories =
+  | "latest"
+  | "tech"
+  | "movie"
+  // "ponder"|
+  // "healing"|
+  | "english";
 
 export const itemPerBlogPage = 7;

@@ -1,8 +1,15 @@
 "use client";
 import FilterButton from "@/components/FilterButton";
-import { blogCategories } from "@/app/config/blog";
+import { blogCategories, BlogCategories } from "@/app/config/blog";
 import { useRouter, usePathname } from "next/navigation";
 import "./style.scss";
+
+const isButtonActive = (category: BlogCategories, pathname: string) => {
+  if (category !== "latest") {
+    return pathname.includes(`/blog/${category}`);
+  }
+  return pathname === "/blog" || pathname.includes(`/blog/${category}`);
+};
 
 const CategoryButtons = () => {
   const router = useRouter();
@@ -12,18 +19,10 @@ const CategoryButtons = () => {
     <div className="category-buttons">
       {blogCategories.map((category) => (
         <FilterButton
-          isActive={
-            category === "latest" && pathname === "/blog"
-              ? true
-              : pathname.includes(category)
-          }
+          isActive={isButtonActive(category, pathname)}
           name={category.charAt(0).toUpperCase() + category.slice(1)}
           key={category}
-          handleClick={() =>
-            router.push(
-              category === "latest" ? "/blog" : `/blog/${category}/page/1`
-            )
-          }
+          handleClick={() => router.push(`/blog/${category}/page/1`)}
         />
       ))}
     </div>

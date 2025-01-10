@@ -1,8 +1,8 @@
 import BlogCategoryList from "@/app/blog/layouts/BlogCategoryList/BlogCategoryList";
 
-const category = "english";
+const category = "latest";
 
-const BlogEnglishListPage = ({ params }: { params: { pageNum: string } }) => {
+const BlogLatestListPage = ({ params }: { params: { pageNum: string } }) => {
   return (
     <BlogCategoryList
       pageNum={params.pageNum}
@@ -10,9 +10,9 @@ const BlogEnglishListPage = ({ params }: { params: { pageNum: string } }) => {
       IntroComponent={
         <>
           <p>
-            「不練習永遠無法變得更好。」
+            「這裡是我最近熱騰騰正在思考的事！」
             <br />
-            練習寫寫的英文短文，試著用英文說出想要表達的話。主題通常是描述一件事，還有短短的、隨機的想法
+            不限類別最新的文章都在這裡，你也可以按上方按鈕選擇想看的類別 : )
           </p>
         </>
       }
@@ -23,4 +23,4 @@ const BlogEnglishListPage = ({ params }: { params: { pageNum: string } }) => {
 
 export const dynamicParams = false;
 
-export default BlogEnglishListPage;
+export default BlogLatestListPage;

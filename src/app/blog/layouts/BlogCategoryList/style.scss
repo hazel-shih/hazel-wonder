@@ -1,6 +1,10 @@
-.blog-landing {
+.blog-list {
   & > .intro {
     padding: 12px 0;
+
+    & p {
+      font-size: 18px;
+    }
   }
 
   & h1 {

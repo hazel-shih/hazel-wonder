@@ -90,7 +90,7 @@ export default async function TechArticlePage({
       <section className="content">
         {data.picture && (
           <figure className="first-picture">
-            <BlogInsertImage relativePath={data.picture} alt={data.alt} />
+            <BlogInsertImage path={data.picture} alt={data.alt} />
           </figure>
         )}
         {MDXElement}

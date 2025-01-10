@@ -10,11 +10,13 @@ import {
   ErrorAlert,
   WarningAlert,
 } from "@/components/Alerts";
+import BlankLink from "@/components/BlankLink";
 import "./style.scss";
 import BlogInsertImage from "@/components/BlogInsertImage";
 import rehypeCodeTitles from "rehype-code-titles";
 import rehypePrism from "rehype-prism-plus";
 import rehypeHighlight from "rehype-highlight";
+import calculateReadingTime from "@/utils/calculateReadingTime";
 
 const category = "tech";
 
@@ -46,6 +48,7 @@ const components = {
   ErrorAlert,
   WarningAlert,
   BlogInsertImage,
+  BlankLink,
 };
 
 export default async function TechArticlePage({
@@ -80,7 +83,13 @@ export default async function TechArticlePage({
     <article className="blog-article">
       <header>
         <h1>{data.title}</h1>
-        <time>{data.date}</time>
+        <div className="info">
+          <time>{data.date}</time>
+          <span>by Hazel Shih</span>
+        </div>
+        <p className="reading-time">
+          閱讀時間：約 {calculateReadingTime(fileContent)} 分鐘
+        </p>
         <div className="description">
           <div className="line" />
           <p>{data.description}</p>

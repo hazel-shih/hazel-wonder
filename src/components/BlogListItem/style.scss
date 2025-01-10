@@ -16,7 +16,7 @@
   }
 
   &:not(:last-child){
-    border-bottom: 1px solid #D8C4B6;
+    border-bottom: 1px solid var(--dark-background);
   }
 
   &:hover {

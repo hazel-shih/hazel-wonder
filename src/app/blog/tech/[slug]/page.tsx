@@ -84,12 +84,19 @@ export default async function TechArticlePage({
       <header>
         <h1>{data.title}</h1>
         <div className="info">
-          <time>{data.date}</time>
+          <time>發佈於 {data.published}</time>
+          <span className="divider">|</span>
+          {data.updated && (
+            <>
+              <time>更新於 {data.updated}</time>
+              <span className="divider">|</span>
+            </>
+          )}
           <span>by Hazel Shih</span>
+          <p className="reading-time">
+            閱讀時間：約 {calculateReadingTime(fileContent)} 分鐘
+          </p>
         </div>
-        <p className="reading-time">
-          閱讀時間：約 {calculateReadingTime(fileContent)} 分鐘
-        </p>
         <div className="description">
           <div className="line" />
           <p>{data.description}</p>

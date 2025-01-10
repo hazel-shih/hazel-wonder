@@ -1,4 +1,3 @@
-import "./page.scss";
 import { nunito } from "@/fonts/configure";
 import BlogListItem from "@/components/BlogListItem";
 import CategoryButtons from "@/components/CategoryButtons";
@@ -6,6 +5,7 @@ import { getArticlesListByCategoryPageNum } from "@/utils/getArticles";
 import { itemPerBlogPage } from "@/app/config/blog";
 import fs from "fs";
 import Pagination from "@/components/Pagination";
+import "@/app/blog/style/blogLanding.scss";
 
 const category = "english";
 const path = "/blog/english";
@@ -20,7 +20,7 @@ const BlogEnglishListPage = ({
   const totalPage = Math.ceil(files.length / itemPerBlogPage);
 
   return (
-    <main className="blog-landing">
+    <section className="blog-landing">
       <CategoryButtons />
       <div className="intro">
         <h1 className={nunito.className}>English Writing</h1>
@@ -35,7 +35,7 @@ const BlogEnglishListPage = ({
           <BlogListItem
             key={article.slug}
             href={`/blog/${article.category}/${article.slug}`}
-            date={article.date}
+            date={article.published}
             title={article.title}
             description={article.description}
           />
@@ -46,7 +46,7 @@ const BlogEnglishListPage = ({
         currentPage={Number(params.pageNum)}
         path={path}
       />
-    </main>
+    </section>
   );
 };
 

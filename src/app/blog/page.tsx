@@ -1,14 +1,14 @@
-import "./page.scss";
 import { nunito } from "@/fonts/configure";
 import BlogListItem from "@/components/BlogListItem";
 import CategoryButtons from "@/components/CategoryButtons";
 import { getLatestArticlesList } from "@/utils/getArticles";
+import "@/app/blog/style/blogLanding.scss";
 
 const BlogLanding = () => {
   const articles = getLatestArticlesList(10);
 
   return (
-    <main className="blog-landing">
+    <section className="blog-landing">
       <CategoryButtons />
       <div className="intro">
         <h1 className={nunito.className}>Latest</h1>
@@ -23,13 +23,13 @@ const BlogLanding = () => {
           <BlogListItem
             key={article.slug}
             href={`/blog/${article.category}/${article.slug}`}
-            date={article.date}
+            date={article.published}
             title={article.title}
             description={article.description}
           />
         ))}
       </div>
-    </main>
+    </section>
   );
 };
 

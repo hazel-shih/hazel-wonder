@@ -15,9 +15,11 @@
 
     & > .info {
       font-size: 16px;
-      & > time {
-        font-size: 16px;
-        margin-right: 12px;
+      padding: 12px 0;
+
+      & > .divider {
+        color: var(--dark-background);
+        margin: 0 6px;
       }
     }
 
@@ -26,7 +28,6 @@
     }
 
     & > .description {
-      padding-top: 12px;
       width: 100%;
 
       & > p {

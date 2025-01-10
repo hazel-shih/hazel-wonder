@@ -5,7 +5,8 @@ import { itemPerBlogPage } from "@/app/config/blog";
 
 type Article = {
   slug: string;
-  date: string;
+  published: string;
+  updated: string;
   title: string;
   description: string;
   category: string;
@@ -48,7 +49,7 @@ export function getArticlesListByCategoryPageNum(
 
   // 根據日期新到舊排序（假設 frontmatter 有 `date` 字段）
   const sortedArticles = articles.sort(
-    (a, b) => Date.parse(b.date) - Date.parse(a.date)
+    (a, b) => Date.parse(b.published) - Date.parse(a.published)
   );
   return getItemsByPage(sortedArticles, Number(pageNum), itemPerBlogPage);
 }
@@ -82,6 +83,6 @@ export function getLatestArticlesList(number: number = 10): Article[] {
 
   // 按日期從新到舊排序
   return articles
-    .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+    .sort((a, b) => Date.parse(b.published) - Date.parse(a.published))
     .slice(0, number);
 }

@@ -1,13 +1,13 @@
-import "./page.scss";
 import { nunito } from "@/fonts/configure";
 import { getLatestArticlesList } from "@/utils/getArticles";
 import Link from "next/link";
+import "./page.scss";
 
 export default function Home() {
   const articles = getLatestArticlesList(5);
 
   return (
-    <main className="home">
+    <section className="home">
       <div>
         <h1 className={nunito.className}>Hi, I&apos;m Hazel 👋🏻</h1>
         <p>
@@ -37,11 +37,11 @@ export default function Home() {
             className="article-item"
             key={article.slug}
           >
-            <span className="date">{article.date}</span>
+            <span className="date">{article.published}</span>
             <p className="article-title">{article.title}</p>
           </Link>
         ))}
       </div>
-    </main>
+    </section>
   );
 }

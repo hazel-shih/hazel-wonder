@@ -2,10 +2,16 @@ import BlogCategoryList from "@/components/layouts/BlogCategoryList/BlogCategory
 
 const category = "latest";
 
-const BlogLatestListPage = ({ params }: { params: { pageNum: string } }) => {
+const BlogLatestListPage = async ({
+  params,
+}: {
+  params: { pageNum: string };
+}) => {
+  const { pageNum } = await params;
+
   return (
     <BlogCategoryList
-      pageNum={params.pageNum}
+      pageNum={pageNum}
       category={category}
       IntroComponent={
         <>

@@ -1,11 +1,38 @@
 import BlogCategoryList from "@/components/layouts/BlogCategoryList/BlogCategoryList";
+import { Metadata } from "next";
 
 const category = "tech";
 
-const BlogTechListPage = ({ params }: { params: { pageNum: string } }) => {
+export function generateMetadata(): Metadata {
+  return {
+    title: "Hazel Wonder Blog - Tech Category",
+    description: "",
+    keywords: ["技術部落格", "前端開發", "深度學習", "AI 工具使用"],
+    openGraph: {
+      type: "website",
+      url: "https://hazelwonder.me/blog/tech",
+      title: "Hazel Wonder Blog - Tech Category",
+      description: "",
+      siteName: "Hazel Wonder",
+      images: [
+        {
+          url: "",
+        },
+      ],
+    },
+  };
+}
+
+const BlogTechListPage = async ({
+  params,
+}: {
+  params: { pageNum: string };
+}) => {
+  const { pageNum } = await params;
+
   return (
     <BlogCategoryList
-      pageNum={params.pageNum}
+      pageNum={pageNum}
       category={category}
       IntroComponent={
         <>

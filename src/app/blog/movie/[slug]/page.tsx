@@ -33,9 +33,11 @@ export default async function TechArticlePage({
 }: {
   params: { slug: string };
 }) {
+  const { slug } = await params;
+
   const filePath = path.join(
     process.cwd(),
-    `src/contents/${category}/${params.slug}.mdx`
+    `src/contents/${category}/${slug}.mdx`
   );
   const fileContent = fs.readFileSync(filePath, "utf8");
 

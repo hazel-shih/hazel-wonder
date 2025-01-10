@@ -2,61 +2,38 @@ import fs from "fs";
 import path from "path";
 import { Metadata } from "next";
 import matter from "gray-matter";
-import { compileMDX } from "next-mdx-remote/rsc";
-import Button from "@/components/Button";
-import "./style.scss";
+import BlogArticle from "@/components/layouts/BlogArticle";
 
 const category = "movie";
 
-export function generateMetadata({
+// can be plain object if not need fetch / dynamic
+export async function generateMetadata({
   params,
 }: {
   params: { slug: string };
-}): Metadata {
-  const filePath = path.join(
-    process.cwd(),
-    `src/contents/${category}/${params.slug}.mdx`
-  );
-  const fileContent = fs.readFileSync(filePath, "utf8");
-  const { data } = matter(fileContent);
-
-  return {
-    title: data.title || `Read about ${params.slug}`,
-    description:
-      data.description ||
-      `An article about ${params.slug} in the movie category.`,
-  };
-}
-
-export default async function TechArticlePage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+}): Promise<Metadata> {
   const { slug } = await params;
-
   const filePath = path.join(
     process.cwd(),
     `src/contents/${category}/${slug}.mdx`
   );
   const fileContent = fs.readFileSync(filePath, "utf8");
+  const { data } = matter(fileContent);
 
-  // 使用 gray-matter 解析 MDX 的 Frontmatter
-  const { content, data } = matter(fileContent);
+  return {
+    title: data.title || `Read about ${slug}`,
+    description:
+      data.description || `An article about ${slug} in the Tech category.`,
+  };
+}
 
-  // 使用 compileMDX 編譯 MDX 文件
-  const { content: MDXElement } = await compileMDX({
-    source: content,
-    components: { Button },
-  });
-
-  return (
-    <article>
-      <h1>{data.title}</h1>
-      <h3>Date: {data.date}</h3>
-      {MDXElement}
-    </article>
-  );
+export default async function TechMoviePage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { slug } = await params;
+  return <BlogArticle slug={slug} category={category} />;
 }
 
 export function generateStaticParams() {

@@ -5,12 +5,13 @@ import matter from "gray-matter";
 import BlogArticle from "@/components/layouts/BlogArticle";
 
 const category = "movie";
+// solve from: https://github.com/orgs/community/discussions/142577#discussioncomment-11054234
+type Params = Promise<{ slug: string }>;
 
-// can be plain object if not need fetch / dynamic
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Params;
 }): Promise<Metadata> {
   const { slug } = await params;
   const filePath = path.join(
@@ -27,11 +28,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function TechMoviePage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function TechMoviePage({ params }: { params: Params }) {
   const { slug } = await params;
   return <BlogArticle slug={slug} category={category} />;
 }

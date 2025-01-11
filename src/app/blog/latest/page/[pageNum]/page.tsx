@@ -1,12 +1,10 @@
 import BlogCategoryList from "@/components/layouts/BlogCategoryList/BlogCategoryList";
 
 const category = "latest";
+// solve from: https://github.com/orgs/community/discussions/142577#discussioncomment-11054234
+type Params = Promise<{ pageNum: string }>;
 
-const BlogLatestListPage = async ({
-  params,
-}: {
-  params: { pageNum: string };
-}) => {
+const BlogLatestListPage = async ({ params }: { params: Params }) => {
   const { pageNum } = await params;
 
   return (

@@ -2,6 +2,8 @@ import BlogCategoryList from "@/components/layouts/BlogCategoryList/BlogCategory
 import { Metadata } from "next";
 
 const category = "tech";
+// solve from: https://github.com/orgs/community/discussions/142577#discussioncomment-11054234
+type Params = Promise<{ pageNum: string }>;
 
 export function generateMetadata(): Metadata {
   return {
@@ -23,11 +25,7 @@ export function generateMetadata(): Metadata {
   };
 }
 
-const BlogTechListPage = async ({
-  params,
-}: {
-  params: { pageNum: string };
-}) => {
+const BlogTechListPage = async ({ params }: { params: Params }) => {
   const { pageNum } = await params;
 
   return (

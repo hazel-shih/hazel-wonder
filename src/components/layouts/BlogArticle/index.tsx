@@ -11,6 +11,7 @@ import {
 import BlankLink from "@/components/BlankLink";
 import "./style.scss";
 import BlogInsertImage from "@/components/BlogInsertImage";
+import Loader from "@/components/Loader";
 import rehypeCodeTitles from "rehype-code-titles";
 import rehypePrism from "rehype-prism-plus";
 import rehypeHighlight from "rehype-highlight";
@@ -24,6 +25,7 @@ const components = {
   WarningAlert,
   BlogInsertImage,
   BlankLink,
+  Loader,
 };
 
 interface BlogArticleProperty {

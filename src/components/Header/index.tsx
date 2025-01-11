@@ -1,5 +1,5 @@
 import { pacifico } from "@/fonts/configure";
-import LOGO from "@public/LOGO.svg";
+import LOGO from "@public/LOGO.png";
 import Image from "next/image";
 import "./style.scss";
 import Link from "next/link";

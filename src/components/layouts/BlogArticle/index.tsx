@@ -46,7 +46,7 @@ export const BlogArticle: React.FC<BlogArticleProperty> = async ({
       <section className="content">
         {data.picture && (
           <figure className="first-picture">
-            <BlogInsertImage path={data.picture} alt={data.alt} />
+            <BlogInsertImage src={data.picture} alt={data.alt} />
           </figure>
         )}
         {MDXElement}

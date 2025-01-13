@@ -3,14 +3,17 @@ import "./style.scss";
 
 interface BlogInsertImageProperty {
   alt: string;
-  path: string;
+  src: string; // relative to public path or url
 }
 
-const BlogInsertImage: React.FC<BlogInsertImageProperty> = ({ alt, path }) => {
+const BlogInsertImage: React.FC<BlogInsertImageProperty> = ({ alt, src }) => {
+  if (!src) {
+    return null;
+  }
   return (
     <Image
       className="blog-insert-image"
-      src={`/articles/${path}`}
+      src={src}
       alt={alt}
       width={680}
       height={680}

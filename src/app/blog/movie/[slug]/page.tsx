@@ -1,8 +1,9 @@
 import fs from "fs";
-import path from "path";
 import { Metadata } from "next";
-import matter from "gray-matter";
 import BlogArticle from "@/components/layouts/BlogArticle";
+import { mdxCache } from "@/utils/mdxGlobalCache";
+import { SITE_URL } from "@/app/config/metadata";
+import { createMetadataFromDefault } from "@/utils/createMetadataFromDefault";
 
 const category = "movie";
 // solve from: https://github.com/orgs/community/discussions/142577#discussioncomment-11054234
@@ -14,18 +15,24 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const filePath = path.join(
-    process.cwd(),
-    `src/contents/${category}/${slug}.mdx`
-  );
-  const fileContent = fs.readFileSync(filePath, "utf8");
-  const { data } = matter(fileContent);
+  const data = mdxCache[category][slug];
 
-  return {
-    title: data.title || `Read about ${slug}`,
-    description:
-      data.description || `An article about ${slug} in the Tech category.`,
-  };
+  const imageData = data.picture
+    ? {
+        url: data.picture,
+        alt: data.alt,
+        width: data.width,
+        height: data.height,
+      }
+    : undefined;
+
+  return createMetadataFromDefault({
+    title: data.title,
+    description: data.description,
+    url: `${SITE_URL}/blog/${category}/${slug}`,
+    keywords: data.tags || [],
+    image: imageData,
+  });
 }
 
 export default async function TechMoviePage({ params }: { params: Params }) {

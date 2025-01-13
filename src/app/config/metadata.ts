@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
-const SITE_NAME = "Hazel Wonder";
-const SITE_URL = "https://hazelwonder.me";
+export const SITE_NAME = "Hazel Wonder";
+export const SITE_URL = "https://hazelwonder.me";
 
 export const defaultMetadata: Metadata = {
   title: "Hazel Wonder",
@@ -35,7 +35,7 @@ export const defaultMetadata: Metadata = {
     url: SITE_URL,
     images: [
       {
-        url: "https://i.imgur.com/B1mVw4S.png",
+        url: "/site-intro.png",
         width: 1200,
         height: 630,
         alt: "Hazel Wonder personal website",
@@ -50,7 +50,7 @@ export const defaultMetadata: Metadata = {
     title: SITE_NAME,
     description:
       "Hazel 是一個對世界充滿好奇的人，學習、自我對話、與人交流是她了解世界的方式。目前是一位前端工程師，在這個網站與你分享網頁前端、AI工具應用、電影心得、生活觀察、日常學習等觀點。",
-    images: ["https://i.imgur.com/B1mVw4S.png"],
+    images: ["/site-intro.png"],
   },
 
   // 其他設定
@@ -61,32 +61,4 @@ export const defaultMetadata: Metadata = {
     //   "en-US": SITE_URL,
     // },
   },
-};
-
-type CustomizedMetadata = {
-  title: string;
-  description: string;
-  url: string;
-  keywords: string[];
-};
-
-export const createMetadataFromDefault = (
-  customizedMetadata: CustomizedMetadata
-): Metadata => {
-  return {
-    ...defaultMetadata,
-    title: customizedMetadata.title,
-    description: customizedMetadata.description,
-    keywords: customizedMetadata.keywords.join(", "),
-    openGraph: {
-      ...defaultMetadata.openGraph,
-      title: customizedMetadata.title,
-      description: customizedMetadata.description,
-      url: customizedMetadata.url,
-    },
-    twitter: {
-      title: customizedMetadata.title,
-      description: customizedMetadata.description,
-    },
-  };
 };

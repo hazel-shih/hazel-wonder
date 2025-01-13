@@ -1,6 +1,6 @@
 import BlogCategoryList from "@/components/layouts/BlogCategoryList/BlogCategoryList";
 import { Metadata } from "next";
-import { createMetadataFromDefault } from "@/app/config/metadata";
+import { createMetadataFromDefault } from "@/utils/createMetadataFromDefault";
 
 const category = "movie";
 // solve from: https://github.com/orgs/community/discussions/142577#discussioncomment-11054234

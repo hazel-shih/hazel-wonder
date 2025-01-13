@@ -12,7 +12,10 @@ export type Article = {
   category: string;
   picture: string;
   alt: string;
+  width: number;
+  height: number;
   content: string;
+  tags: string[];
 };
 
 function getItemsByPage(

@@ -48,11 +48,13 @@ const BlogCategoryList: React.FC<BlogCategoryListProperty> = ({
           />
         ))}
       </div>
-      <Pagination
-        totalPages={totalPage}
-        currentPage={Number(pageNum)}
-        path={path}
-      />
+      {articles.length !== 0 && (
+        <Pagination
+          totalPages={totalPage}
+          currentPage={Number(pageNum)}
+          path={path}
+        />
+      )}
     </section>
   );
 };

@@ -1,4 +1,7 @@
  .category-buttons {
+  width: 100%;
   display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
   padding-bottom: 24px;
 }

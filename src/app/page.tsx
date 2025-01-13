@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { nunito } from "@/fonts/configure";
 import { getLatestArticlesList } from "@/utils/getArticles";
 import Link from "next/link";
+import defaultMetadata from "./config/metadata";
 import "./page.scss";
+
+export const metadata: Metadata = {
+  ...defaultMetadata,
+};
 
 export default function Home() {
   const articles = getLatestArticlesList(5);

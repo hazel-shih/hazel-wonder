@@ -1,32 +1,9 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import { compileMDX } from "next-mdx-remote/rsc";
-import {
-  InfoAlert,
-  SuccessAlert,
-  ErrorAlert,
-  WarningAlert,
-} from "@/components/Alerts";
-import BlankLink from "@/components/BlankLink";
-import "./style.scss";
 import BlogInsertImage from "@/components/BlogInsertImage";
-import Loader from "@/components/Loader";
-import rehypeCodeTitles from "rehype-code-titles";
-import rehypePrism from "rehype-prism-plus";
-import rehypeHighlight from "rehype-highlight";
 import calculateReadingTime from "@/utils/calculateReadingTime";
 import { BlogCategories } from "@/app/config/blog";
-
-const components = {
-  InfoAlert,
-  SuccessAlert,
-  ErrorAlert,
-  WarningAlert,
-  BlogInsertImage,
-  BlankLink,
-  Loader,
-};
+import { mdxCache } from "@/utils/mdxGlobalCache";
+import compileMdx from "@/utils/compileMdx";
+import "./style.scss";
 
 interface BlogArticleProperty {
   slug: string;
@@ -37,28 +14,8 @@ export const BlogArticle: React.FC<BlogArticleProperty> = async ({
   slug,
   category,
 }) => {
-  const filePath = path.join(
-    process.cwd(),
-    `src/contents/${category}/${slug}.mdx`
-  );
-  const fileContent = fs.readFileSync(filePath, "utf8");
-
-  // 使用 gray-matter 解析 MDX 的 Frontmatter
-  const { content, data } = matter(fileContent);
-  const { content: MDXElement } = await compileMDX({
-    source: content,
-    components: components,
-    options: {
-      parseFrontmatter: true,
-      mdxOptions: {
-        rehypePlugins: [
-          rehypeCodeTitles,
-          rehypeHighlight,
-          [rehypePrism, { ignoreMissing: true }],
-        ],
-      },
-    },
-  });
+  const data = mdxCache[category][slug];
+  const MDXElement = await compileMdx(data.content);
 
   return (
     <article className="blog-article">
@@ -74,9 +31,11 @@ export const BlogArticle: React.FC<BlogArticleProperty> = async ({
             </>
           )}
           <span>by Hazel Shih</span>
-          <p className="reading-time">
-            閱讀時間：約 {calculateReadingTime(fileContent)} 分鐘
-          </p>
+          {data.content && (
+            <p className="reading-time">
+              閱讀時間：約 {calculateReadingTime(data.content)} 分鐘
+            </p>
+          )}
         </div>
         <div className="description">
           <div className="line" />

@@ -3,13 +3,16 @@ import path from "path";
 import matter from "gray-matter";
 import { itemPerBlogPage, BlogCategories } from "@/app/config/blog";
 
-type Article = {
+export type Article = {
   slug: string;
   published: string;
   updated: string;
   title: string;
   description: string;
   category: string;
+  picture: string;
+  alt: string;
+  content: string;
 };
 
 function getItemsByPage(

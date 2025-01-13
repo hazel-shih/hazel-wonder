@@ -4,10 +4,6 @@
   font-weight: 400;
   cursor: pointer;
 
-  &:not(:last-child) {
-    margin-right: 20px;
-  }
-
   &:hover {
     opacity: 0.8;
   }

@@ -1,4 +1,4 @@
-header {
+.custom-header {
   width: 100%;
   display: flex;
   justify-content: left;
@@ -7,6 +7,12 @@ header {
   & > nav {
     display: flex;
     padding: 16px 0;
+    width: 100%;
+
+    @media (max-width: 600px) {
+      justify-content: space-between;
+      align-items: center;
+    }
 
     & > .logo {
       display: flex;
@@ -24,7 +30,7 @@ header {
       }
     }
 
-    & > .links {
+    & > .desktop-menu {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -35,18 +41,22 @@ header {
         font-weight: 400;
         cursor: pointer;
     
-        &:not(:last-child) {
-          margin-right: 20px;
-        }
-    
         &:hover {
           opacity: 0.8;
         }
-
+  
         &.isActive {
           color: var(--primary);
           font-weight: 600;
         }
+
+        &:not(:last-child) {
+          margin-right: 20px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        display: none;
       }
     }
   }

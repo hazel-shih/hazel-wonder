@@ -27,7 +27,7 @@ html {
 body {
   max-width: 680px;
   width: 100%;
-  padding: 0 16px;
+  padding: 0 18px;
   align-items: flex-start;
   overflow-x: hidden;
   color: var(--text-primary);

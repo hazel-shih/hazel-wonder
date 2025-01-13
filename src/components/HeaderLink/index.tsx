@@ -9,14 +9,22 @@ import classNames from "classnames";
 interface HeaderLinkProperty {
   name: string;
   href: string;
+  handleClick?: () => void;
+  className?: string;
 }
 
-const HeaderLink: React.FC<HeaderLinkProperty> = ({ name, href }) => {
+const HeaderLink: React.FC<HeaderLinkProperty> = ({
+  name,
+  href,
+  handleClick,
+  className,
+}) => {
   const pathname = usePathname();
 
   return (
     <Link
-      className={classNames("header-link", nunito.className, {
+      onClick={handleClick}
+      className={classNames("header-link", nunito.className, className, {
         isActive: pathname.includes(href),
       })}
       href={href}

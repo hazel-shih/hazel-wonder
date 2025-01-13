@@ -16,15 +16,6 @@ export const defaultMetadata: Metadata = {
   robots:
     "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
 
-  // 內容設定
-  themeColor: "#ffffff",
-  colorScheme: "light dark",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
-
   // Open Graph 設定
   openGraph: {
     type: "website",

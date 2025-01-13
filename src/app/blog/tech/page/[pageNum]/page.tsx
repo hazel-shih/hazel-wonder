@@ -9,7 +9,7 @@ type Params = Promise<{ pageNum: string }>;
 export const metadata: Metadata = createMetadataFromDefault({
   title: "Tech 文章列表 - Hazel Wonder",
   description:
-    "Hazel Wonder Blog 技術文章列表，文章內容包含網頁前端、AI 工具應用等技術分享，希望可以增加領域守備範圍！",
+    "Hazel Wonder Blog 技術文章列表，文章內容包含網頁開發、AI 工具應用等技術分享，希望可以增加領域守備範圍！",
   keywords: ["網頁開發", "AI應用", "技術分享"],
   url: "https://hazelwonder.me/blog/tech/page/1",
 });

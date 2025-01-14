@@ -29,11 +29,15 @@ export default function Home() {
 
       <div>
         <h1 className={nunito.className}>
-          Recent Highlights<span className="ps">(01/03 updated)</span>
+          Recent Highlights<span className="ps">(01/14 updated)</span>
         </h1>
         <p>實踐於生活的信念：Stay fresh!</p>
-        <p>正在讀的書：《魅力學》by Olivia Fox Cabane</p>
-        <p>反覆循環的歌： Kendrick Lamar - luther</p>
+        <a href="https://www.books.com.tw/products/0010773456" target="_blank">
+          正在讀的書：《魅力學》by Olivia Fox Cabane
+        </a>
+        <a href="https://www.youtube.com/watch?v=ElpJ2fBLnGg" target="_blank">
+          反覆循環的歌： Matilda Mann - Dazed & Confused
+        </a>
       </div>
       <div>
         <h1 className={nunito.className}>Latest Writings</h1>

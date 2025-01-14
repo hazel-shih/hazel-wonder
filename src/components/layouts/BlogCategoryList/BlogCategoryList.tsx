@@ -20,7 +20,7 @@ function capitalizeFirstLetter(str: string) {
 }
 
 const BlogCategoryList: React.FC<BlogCategoryListProperty> = ({
-  pageNum,
+  pageNum = "1",
   category,
   IntroComponent,
   path,

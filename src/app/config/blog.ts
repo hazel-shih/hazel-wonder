@@ -4,7 +4,7 @@ export const blogCategories: BlogCategory[] = [
   "movie",
   // "ponder",
   // "healing",
-  // "english",
+  "english",
 ];
 
 export type BlogCategory =

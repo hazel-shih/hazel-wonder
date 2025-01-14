@@ -1,6 +1,8 @@
 import BlogCategoryList from "@/components/layouts/BlogCategoryList/BlogCategoryList";
 import { Metadata } from "next";
 import { createMetadataFromDefault } from "@/utils/createMetadataFromDefault";
+import { loadAllMDX } from "@/utils/mdxGlobalCache";
+import getPageNumByCategory from "@/utils/getPageNumByCategory";
 
 const category = "english";
 // solve from: https://github.com/orgs/community/discussions/142577#discussioncomment-11054234
@@ -38,5 +40,10 @@ const BlogEnglishListPage = async ({ params }: { params: Params }) => {
 };
 
 export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  await loadAllMDX();
+  return getPageNumByCategory(category);
+}
 
 export default BlogEnglishListPage;

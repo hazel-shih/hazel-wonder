@@ -1,5 +1,6 @@
 import { itemPerBlogPage, BlogCategory } from "@/app/config/blog";
 import { mdxCache } from "./mdxGlobalCache";
+import getTotalPage from "./getTotalPage";
 
 export type Article = {
   slug: string;
@@ -38,25 +39,27 @@ export function getArticlesListByCategoryPageNum(
   category: BlogCategory,
   pageNum: string = "1"
 ): ArticlesListByCategory {
+  // latest
   if (category === "latest") {
-    const articles = getItemsByPage(
-      getAllSortedArticles(),
+    const totalArticles = getAllSortedArticles();
+    const pageArticles = getItemsByPage(
+      totalArticles,
       Number(pageNum),
       itemPerBlogPage
     );
     return {
-      articles,
-      totalPage: Math.ceil(articles.length / itemPerBlogPage),
+      articles: pageArticles,
+      totalPage: getTotalPage(totalArticles),
     };
   }
-
+  // other category
   const articles = Object.values(mdxCache[category]);
   const sortedArticles = articles.sort(
     (a, b) => Date.parse(b.published) - Date.parse(a.published)
   );
   return {
     articles: getItemsByPage(sortedArticles, Number(pageNum), itemPerBlogPage),
-    totalPage: Math.ceil(articles.length / itemPerBlogPage),
+    totalPage: getTotalPage(articles),
   };
 }
 
@@ -65,7 +68,7 @@ export function getLatestArticlesList(number: number = 10): Article[] {
 }
 
 // utils
-const getAllSortedArticles = (): Article[] => {
+export const getAllSortedArticles = (): Article[] => {
   const articles: Article[] = Object.values(mdxCache).flatMap((category) =>
     Object.values(category)
   );

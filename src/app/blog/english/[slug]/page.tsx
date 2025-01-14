@@ -1,9 +1,9 @@
-import fs from "fs";
 import { Metadata } from "next";
 import BlogArticle from "@/components/layouts/BlogArticle";
 import { mdxCache } from "@/utils/mdxGlobalCache";
 import { SITE_URL } from "@/app/config/metadata";
 import { createMetadataFromDefault } from "@/utils/createMetadataFromDefault";
+import getSlugsByCategory from "@/utils/getSlugsByCategory";
 
 const category = "english";
 
@@ -36,17 +36,18 @@ export async function generateMetadata({
   });
 }
 
-export default async function TechEnglishPage({ params }: { params: Params }) {
+export default async function BlogEnglishArticlePage({
+  params,
+}: {
+  params: Params;
+}) {
   const { slug } = await params;
   return <BlogArticle slug={slug} category={category} />;
 }
 
 export function generateStaticParams() {
-  const files = fs.readdirSync(`src/contents/${category}`);
-  const data = files.map((file) => ({
-    slug: file.replace(".mdx", ""),
-  }));
-  return data;
+  const slugs = getSlugsByCategory(category);
+  return slugs;
 }
 
 export const dynamicParams = false;

@@ -1,13 +1,13 @@
 import BlogInsertImage from "@/components/BlogInsertImage";
 import calculateReadingTime from "@/utils/calculateReadingTime";
-import { BlogCategories } from "@/app/config/blog";
+import { BlogCategory } from "@/app/config/blog";
 import { mdxCache } from "@/utils/mdxGlobalCache";
 import compileMdx from "@/utils/compileMdx";
 import "./style.scss";
 
 interface BlogArticleProperty {
   slug: string;
-  category: BlogCategories;
+  category: BlogCategory;
 }
 
 export const BlogArticle: React.FC<BlogArticleProperty> = async ({

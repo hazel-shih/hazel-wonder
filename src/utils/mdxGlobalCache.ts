@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { BlogCategories } from "@/app/config/blog";
+import { BlogCategory } from "@/app/config/blog";
 import { Article } from "./getArticles";
 
-type MdxCache = Record<BlogCategories, Record<Article["slug"], Article>>;
+type MdxCache = Record<BlogCategory, Record<Article["slug"], Article>>;
 
 export const mdxCache: MdxCache = {} as MdxCache;
 
@@ -19,7 +19,7 @@ export async function loadAllMDX() {
   const categories = fs
     .readdirSync(baseDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name) as BlogCategories[];
+    .map((entry) => entry.name) as BlogCategory[];
 
   for (const category of categories) {
     const categoryDir = path.join(baseDir, category);

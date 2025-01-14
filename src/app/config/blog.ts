@@ -1,4 +1,4 @@
-export const blogCategories: BlogCategories[] = [
+export const blogCategories: BlogCategory[] = [
   "latest",
   "tech",
   "movie",
@@ -7,7 +7,7 @@ export const blogCategories: BlogCategories[] = [
   // "english",
 ];
 
-export type BlogCategories =
+export type BlogCategory =
   | "latest"
   | "tech"
   | "movie"

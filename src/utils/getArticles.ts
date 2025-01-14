@@ -1,4 +1,4 @@
-import { itemPerBlogPage, BlogCategories } from "@/app/config/blog";
+import { itemPerBlogPage, BlogCategory } from "@/app/config/blog";
 import { mdxCache } from "./mdxGlobalCache";
 
 export type Article = {
@@ -35,7 +35,7 @@ type ArticlesListByCategory = {
 };
 
 export function getArticlesListByCategoryPageNum(
-  category: BlogCategories,
+  category: BlogCategory,
   pageNum: string = "1"
 ): ArticlesListByCategory {
   if (category === "latest") {

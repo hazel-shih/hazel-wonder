@@ -1,7 +1,7 @@
 import { nunito } from "@/fonts/configure";
 import BlogListItem from "@/components/BlogListItem";
 import CategoryButtons from "@/components/CategoryButtons";
-import { BlogCategories } from "@/app/config/blog";
+import { BlogCategory } from "@/app/config/blog";
 import Pagination from "@/components/Pagination";
 import { ReactNode } from "react";
 import { getArticlesListByCategoryPageNum } from "@/utils/getArticles";
@@ -9,7 +9,7 @@ import "./style.scss";
 
 interface BlogCategoryListProperty {
   pageNum: string;
-  category: BlogCategories;
+  category: BlogCategory;
   IntroComponent: ReactNode;
   path: string;
 }

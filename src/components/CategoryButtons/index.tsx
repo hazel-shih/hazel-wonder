@@ -1,10 +1,10 @@
 "use client";
 import FilterButton from "@/components/FilterButton";
-import { blogCategories, BlogCategories } from "@/app/config/blog";
+import { blogCategories, BlogCategory } from "@/app/config/blog";
 import { useRouter, usePathname } from "next/navigation";
 import "./style.scss";
 
-const isButtonActive = (category: BlogCategories, pathname: string) => {
+const isButtonActive = (category: BlogCategory, pathname: string) => {
   if (category !== "latest") {
     return pathname.includes(`/blog/${category}`);
   }

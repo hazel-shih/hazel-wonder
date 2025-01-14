@@ -1,9 +1,9 @@
-import fs from "fs";
 import { Metadata } from "next";
 import BlogArticle from "@/components/layouts/BlogArticle";
 import { mdxCache } from "@/utils/mdxGlobalCache";
 import { SITE_URL } from "@/app/config/metadata";
 import { createMetadataFromDefault } from "@/utils/createMetadataFromDefault";
+import getSlugsByCategory from "@/utils/getSlugsByCategory";
 
 const category = "movie";
 // solve from: https://github.com/orgs/community/discussions/142577#discussioncomment-11054234
@@ -35,17 +35,18 @@ export async function generateMetadata({
   });
 }
 
-export default async function TechMoviePage({ params }: { params: Params }) {
+export default async function BlogMovieArticlePage({
+  params,
+}: {
+  params: Params;
+}) {
   const { slug } = await params;
   return <BlogArticle slug={slug} category={category} />;
 }
 
 export function generateStaticParams() {
-  const files = fs.readdirSync(`src/contents/${category}`);
-  const data = files.map((file) => ({
-    slug: file.replace(".mdx", ""),
-  }));
-  return data;
+  const slugs = getSlugsByCategory(category);
+  return slugs;
 }
 
 export const dynamicParams = false;

@@ -11,7 +11,7 @@ const getPageNumByCategory = (
     totalPage = getTotalPage(getAllSortedArticles());
   } else {
     if (!mdxCache[category]) {
-      return [];
+      return [{ pageNum: "1" }];
     }
     totalPage = getTotalPage(Object.values(mdxCache[category]));
   }

@@ -53,6 +53,12 @@ export function getArticlesListByCategoryPageNum(
     };
   }
   // other category
+  if (!mdxCache[category]) {
+    return {
+      articles: [],
+      totalPage: 0,
+    };
+  }
   const articles = Object.values(mdxCache[category]);
   const sortedArticles = articles.sort(
     (a, b) => Date.parse(b.published) - Date.parse(a.published)

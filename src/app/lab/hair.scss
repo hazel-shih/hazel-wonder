@@ -1,0 +1,8 @@
+.fade-div {
+  display: inline-block;
+  transition: opacity 0.5s ease-in-out; /* 讓透明度變化有過渡效果 */
+}
+
+.fade-div.faded {
+  opacity: 0; /* 逐漸消失 */
+}

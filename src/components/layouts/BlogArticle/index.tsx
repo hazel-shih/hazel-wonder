@@ -17,39 +17,43 @@ export const BlogArticle: React.FC<BlogArticleProperty> = async ({
   if (!slug) {
     return null;
   }
-  const data = mdxCache[category][slug];
-  const MDXElement = await compileMdx(data.content);
+  const categoryArticles = mdxCache[category];
+  const articleData = categoryArticles ? categoryArticles[slug] : null;
+  if (!articleData) {
+    return null;
+  }
+  const MDXElement = await compileMdx(articleData.content);
 
   return (
     <article className="blog-article">
       <header>
-        <h1>{data.title}</h1>
+        <h1>{articleData.title}</h1>
         <div className="info">
-          <time>發佈於 {data.published}</time>
+          <time>發佈於 {articleData.published}</time>
           <span className="divider">|</span>
-          {data.updated && (
+          {articleData.updated && (
             <>
-              <time>更新於 {data.updated}</time>
+              <time>更新於 {articleData.updated}</time>
               <span className="divider">|</span>
             </>
           )}
           <span>by Hazel Shih</span>
-          {data.content && (
+          {articleData.content && (
             <p className="reading-time">
-              閱讀時間：約 {calculateReadingTime(data.content)} 分鐘
+              閱讀時間：約 {calculateReadingTime(articleData.content)} 分鐘
             </p>
           )}
         </div>
         <div className="description">
           <div className="line" />
-          <p>{data.description}</p>
+          <p>{articleData.description}</p>
           <div className="line" />
         </div>
       </header>
       <section className="content">
-        {data.picture && (
+        {articleData.picture && (
           <figure className="first-picture">
-            <BlogInsertImage src={data.picture} alt={data.alt} />
+            <BlogInsertImage src={articleData.picture} alt={articleData.alt} />
           </figure>
         )}
         {MDXElement}

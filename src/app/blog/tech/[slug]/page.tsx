@@ -4,6 +4,7 @@ import { mdxCache } from "@/utils/mdxGlobalCache";
 import { SITE_URL } from "@/app/config/metadata";
 import { createMetadataFromDefault } from "@/utils/createMetadataFromDefault";
 import getSlugsByCategory from "@/utils/getSlugsByCategory";
+import { defaultMetadata } from "@/app/config/metadata";
 
 const category = "tech";
 // solve from: https://github.com/orgs/community/discussions/142577#discussioncomment-11054234
@@ -15,7 +16,10 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const data = mdxCache[category][slug];
+  const data = mdxCache[category] ? mdxCache[category][slug] : null;
+  if (!data) {
+    return defaultMetadata;
+  }
 
   const imageData = data.picture
     ? {

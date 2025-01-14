@@ -4,6 +4,7 @@ import { mdxCache } from "@/utils/mdxGlobalCache";
 import { SITE_URL } from "@/app/config/metadata";
 import { createMetadataFromDefault } from "@/utils/createMetadataFromDefault";
 import getSlugsByCategory from "@/utils/getSlugsByCategory";
+import { loadAllMDX } from "@/utils/mdxGlobalCache";
 
 const category = "english";
 
@@ -45,7 +46,8 @@ export default async function BlogEnglishArticlePage({
   return <BlogArticle slug={slug} category={category} />;
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  await loadAllMDX();
   const slugs = getSlugsByCategory(category);
   return slugs;
 }

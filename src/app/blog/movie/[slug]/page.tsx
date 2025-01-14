@@ -4,6 +4,7 @@ import { mdxCache } from "@/utils/mdxGlobalCache";
 import { SITE_URL } from "@/app/config/metadata";
 import { createMetadataFromDefault } from "@/utils/createMetadataFromDefault";
 import getSlugsByCategory from "@/utils/getSlugsByCategory";
+import { loadAllMDX } from "@/utils/mdxGlobalCache";
 
 const category = "movie";
 // solve from: https://github.com/orgs/community/discussions/142577#discussioncomment-11054234
@@ -44,8 +45,10 @@ export default async function BlogMovieArticlePage({
   return <BlogArticle slug={slug} category={category} />;
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  await loadAllMDX();
   const slugs = getSlugsByCategory(category);
+
   return slugs;
 }
 

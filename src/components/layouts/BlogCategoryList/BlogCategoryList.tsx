@@ -1,10 +1,10 @@
 import { nunito } from "@/fonts/configure";
 import BlogListItem from "@/components/BlogListItem";
 import CategoryButtons from "@/components/CategoryButtons";
-import { getArticlesListByCategoryPageNum } from "@/utils/getArticles";
 import { BlogCategories } from "@/app/config/blog";
 import Pagination from "@/components/Pagination";
 import { ReactNode } from "react";
+import { getArticlesListByCategoryPageNum } from "@/utils/getArticles";
 import "./style.scss";
 
 interface BlogCategoryListProperty {

@@ -1,7 +1,5 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
 import { itemPerBlogPage, BlogCategories } from "@/app/config/blog";
+import { mdxCache } from "./mdxGlobalCache";
 
 export type Article = {
   slug: string;
@@ -19,7 +17,7 @@ export type Article = {
 };
 
 function getItemsByPage(
-  articles: Article[],
+  categoryArticles: Article[],
   pageNum: number,
   itemsPerPage: number
 ) {
@@ -28,7 +26,7 @@ function getItemsByPage(
 
   const startIndex = (pageNum - 1) * itemsPerPage; // 起始索引
   const endIndex = startIndex + itemsPerPage; // 結束索引
-  return articles.slice(startIndex, endIndex); // 使用 slice 截取陣列
+  return categoryArticles.slice(startIndex, endIndex); // 使用 slice 截取陣列
 }
 
 type ArticlesListByCategory = {
@@ -40,31 +38,19 @@ export function getArticlesListByCategoryPageNum(
   category: BlogCategories,
   pageNum: string = "1"
 ): ArticlesListByCategory {
-  let articles: Article[] = [];
-
   if (category === "latest") {
-    articles = getLatestArticles();
-  } else {
-    const articlesDir = path.join(process.cwd(), `src/contents/${category}`);
-
-    // 取得該目錄下的所有檔案
-    const filenames = fs.readdirSync(articlesDir);
-
-    // 遍歷所有文件，提取 frontmatter
-    articles = filenames
-      .filter((file) => file.endsWith(".mdx")) // 過濾出 .mdx 檔案
-      .map((filename) => {
-        const filePath = path.join(articlesDir, filename);
-        const fileContent = fs.readFileSync(filePath, "utf8");
-
-        // 解析 Frontmatter
-        const { data } = matter(fileContent);
-
-        return data as Article;
-      });
+    const articles = getItemsByPage(
+      getAllSortedArticles(),
+      Number(pageNum),
+      itemPerBlogPage
+    );
+    return {
+      articles,
+      totalPage: Math.ceil(articles.length / itemPerBlogPage),
+    };
   }
 
-  // 根據日期新到舊排序（假設 frontmatter 有 `date` 字段）
+  const articles = Object.values(mdxCache[category]);
   const sortedArticles = articles.sort(
     (a, b) => Date.parse(b.published) - Date.parse(a.published)
   );
@@ -74,65 +60,16 @@ export function getArticlesListByCategoryPageNum(
   };
 }
 
-export function getLatestArticles(): Article[] {
-  const baseDir = path.join(process.cwd(), "src/contents");
-
-  // 列出 categories (e.g., "movies", "tech")
-  const categories = fs
-    .readdirSync(baseDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory()) // 過濾出類別資料夾
-    .map((entry) => entry.name);
-
-  // 遍歷每個資料夾，處理 .mdx 檔案
-  const articles: Article[] = [];
-
-  for (const category of categories) {
-    const categoryDir = path.join(baseDir, category);
-    const mdxFileNames = fs
-      .readdirSync(categoryDir)
-      .filter((file) => file.endsWith(".mdx"));
-
-    for (const mdxFileName of mdxFileNames) {
-      const filePath = path.join(categoryDir, mdxFileName);
-      const fileContent = fs.readFileSync(filePath, "utf8");
-      const { data } = matter(fileContent);
-
-      articles.push(data as Article);
-    }
-  }
-
-  return articles;
-}
-
 export function getLatestArticlesList(number: number = 10): Article[] {
-  const baseDir = path.join(process.cwd(), "src/contents");
-
-  // 列出 categories (e.g., "movies", "tech")
-  const categories = fs
-    .readdirSync(baseDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory()) // 過濾出類別資料夾
-    .map((entry) => entry.name);
-
-  // 遍歷每個資料夾，處理 .mdx 檔案
-  const articles: Article[] = [];
-
-  for (const category of categories) {
-    const categoryDir = path.join(baseDir, category);
-    const mdxFileNames = fs
-      .readdirSync(categoryDir)
-      .filter((file) => file.endsWith(".mdx"));
-
-    for (const mdxFileName of mdxFileNames) {
-      const filePath = path.join(categoryDir, mdxFileName);
-      const fileContent = fs.readFileSync(filePath, "utf8");
-      const { data } = matter(fileContent);
-
-      articles.push(data as Article);
-    }
-  }
-
-  // 按日期從新到舊排序
-  return articles
-    .sort((a, b) => Date.parse(b.published) - Date.parse(a.published))
-    .slice(0, number);
+  return getAllSortedArticles().slice(0, number);
 }
+
+// utils
+const getAllSortedArticles = (): Article[] => {
+  const articles: Article[] = Object.values(mdxCache).flatMap((category) =>
+    Object.values(category)
+  );
+  return articles.sort(
+    (a, b) => Date.parse(b.published) - Date.parse(a.published)
+  );
+};

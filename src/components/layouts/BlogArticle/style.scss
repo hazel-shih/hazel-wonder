@@ -110,17 +110,6 @@
       border-top: 5px dotted var(--dark-background); /* 僅設置上邊框 */
     }
 
-    // Link
-    & a {
-      color: var(--secondary);
-      border-bottom: 1px solid var(--secondary);
-      display: inline-block;
-
-      & > p {
-        margin: 0;
-      }
-    }
-
     // Blockquote
     & > blockquote {
       font-style: italic;

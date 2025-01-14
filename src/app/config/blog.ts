@@ -1,6 +1,6 @@
 export const blogCategories: BlogCategories[] = [
   "latest",
-  // "tech",
+  "tech",
   "movie",
   // "ponder",
   // "healing",

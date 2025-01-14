@@ -14,6 +14,9 @@ export const BlogArticle: React.FC<BlogArticleProperty> = async ({
   slug,
   category,
 }) => {
+  if (!slug) {
+    return null;
+  }
   const data = mdxCache[category][slug];
   const MDXElement = await compileMdx(data.content);
 

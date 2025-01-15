@@ -41,9 +41,10 @@
       }
     }
   }
+}
 
   // Content Section
-  & > .content {
+  .mdx-content {
     padding-top: 12px;
     font-size: 18px;
 
@@ -145,7 +146,6 @@
       right: 10px;
     }
   }
-}
 
 pre {
   overflow-x: auto;

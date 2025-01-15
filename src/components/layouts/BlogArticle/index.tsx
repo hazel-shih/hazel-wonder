@@ -50,7 +50,7 @@ export const BlogArticle: React.FC<BlogArticleProperty> = async ({
           <div className="line" />
         </div>
       </header>
-      <section className="content">
+      <section className="mdx-content">
         {articleData.picture && (
           <figure className="first-picture">
             <BlogInsertImage src={articleData.picture} alt={articleData.alt} />

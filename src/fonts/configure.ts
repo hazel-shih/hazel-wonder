@@ -1,4 +1,4 @@
-import { Nunito, Noto_Sans_TC, Pacifico } from "next/font/google";
+import { Nunito, Noto_Sans_TC, Pacifico, Inter } from "next/font/google";
 
 export const notoSansTc = Noto_Sans_TC({
   variable: "--font-noto-sans-tc",
@@ -8,6 +8,13 @@ export const notoSansTc = Noto_Sans_TC({
 
 export const nunito = Nunito({
   variable: "--font-nunito",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// for english writing
+export const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });

@@ -3,6 +3,7 @@ import calculateReadingTime from "@/utils/calculateReadingTime";
 import { BlogCategory } from "@/app/config/blog";
 import { mdxCache } from "@/utils/mdxGlobalCache";
 import compileMdx from "@/utils/compileMdx";
+import { inter } from "@/fonts/configure";
 import "./style.scss";
 
 interface BlogArticleProperty {
@@ -27,7 +28,13 @@ export const BlogArticle: React.FC<BlogArticleProperty> = async ({
   return (
     <article className="blog-article">
       <header>
-        <h1>{articleData.title}</h1>
+        <h1
+          className={`${
+            category === "english" && `${inter.className} english`
+          }`}
+        >
+          {articleData.title}
+        </h1>
         <div className="info">
           <time>發佈於 {articleData.published}</time>
           <span className="divider">|</span>
@@ -44,13 +51,21 @@ export const BlogArticle: React.FC<BlogArticleProperty> = async ({
             </p>
           )}
         </div>
-        <div className="description">
+        <div
+          className={`description ${
+            category === "english" && `${inter.className} english`
+          }`}
+        >
           <div className="line" />
           <p>{articleData.description}</p>
           <div className="line" />
         </div>
       </header>
-      <section className="mdx-content">
+      <section
+        className={`mdx-content ${
+          category === "english" && `${inter.className} english`
+        }`}
+      >
         {articleData.picture && (
           <figure className="first-picture">
             <BlogInsertImage src={articleData.picture} alt={articleData.alt} />

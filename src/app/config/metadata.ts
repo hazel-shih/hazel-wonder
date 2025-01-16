@@ -12,6 +12,10 @@ export const defaultMetadata: Metadata = {
   creator: "Hazel Shih",
   publisher: "Hazel Shih",
 
+  verification: {
+    google: "FjjykoJz3KK3U8RSW3gBIUp6rnk0zV7Rj_PXxwO4Heg",
+  },
+
   // 機器人設定
   robots:
     "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",

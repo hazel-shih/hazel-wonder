@@ -6,6 +6,7 @@ import { notoSansTc } from "@/fonts/configure";
 import { defaultMetadata } from "./config/metadata";
 import { loadAllMDX } from "@/utils/mdxGlobalCache";
 import { redirect } from "next/navigation";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = defaultMetadata;
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
         <main>{children}</main>
         <Footer />
       </body>
+      <GoogleAnalytics gaId="G-NJN0HB3V78" />
     </html>
   );
 }

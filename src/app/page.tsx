@@ -3,6 +3,7 @@ import { nunito } from "@/fonts/configure";
 import { getLatestArticlesList } from "@/utils/getArticles";
 import Link from "next/link";
 import { defaultMetadata } from "./config/metadata";
+import recentHighlight from "./config/recent-highlight.json";
 import "./page.scss";
 
 export const metadata: Metadata = {
@@ -29,14 +30,15 @@ export default function Home() {
 
       <div>
         <h1 className={nunito.className}>
-          Recent Highlights<span className="ps">(01/14 updated)</span>
+          Recent Highlights
+          <span className="ps">({recentHighlight.lastUpdate} updated)</span>
         </h1>
-        <p>實踐於生活的信念：Stay fresh!</p>
-        <a href="https://www.books.com.tw/products/0010773456" target="_blank">
-          正在讀的書：《魅力學》by Olivia Fox Cabane
+        <p>實踐於生活的信念：{recentHighlight.beliefs}</p>
+        <a href={recentHighlight.currentBook.link} target="_blank">
+          正在讀的書：{recentHighlight.currentBook.content}
         </a>
-        <a href="https://www.youtube.com/watch?v=ElpJ2fBLnGg" target="_blank">
-          反覆循環的歌： Matilda Mann - Dazed & Confused
+        <a href={recentHighlight.currentSong.link} target="_blank">
+          反覆循環的歌： {recentHighlight.currentSong.content}
         </a>
       </div>
       <div>

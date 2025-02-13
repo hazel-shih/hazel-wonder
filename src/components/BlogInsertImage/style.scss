@@ -1,6 +1,20 @@
 .blog-insert-image {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  margin: 16px 0;
+  margin: 12px auto;
+
+  & > .image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  & > .description {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  & + .blog-insert-image {
+    margin: 0 auto 6px;
+  }
 }

@@ -68,7 +68,13 @@ export const BlogArticle: React.FC<BlogArticleProperty> = async ({
       >
         {articleData.picture && (
           <figure className="first-picture">
-            <BlogInsertImage src={articleData.picture} alt={articleData.alt} />
+            <BlogInsertImage
+              src={articleData.picture}
+              alt={articleData.alt}
+              width={articleData.width}
+              height={articleData.height}
+              description={articleData.img_description}
+            />
           </figure>
         )}
         {MDXElement}

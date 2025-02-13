@@ -13,6 +13,7 @@ export type Article = {
   alt: string;
   width: number;
   height: number;
+  img_description: string;
   content: string;
   tags: string[];
 };

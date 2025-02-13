@@ -64,16 +64,17 @@ tags: ["內部工具開發", "computer vision", "react", "object detection"]
 
 ### 快捷鍵
 
-```js=
+```typescript
 interface HotKeyConfig {
-  key: string;                    // 觸發按鍵
-  modifiers?: Modifier[];         // 輔助按鍵（Ctrl、Alt 等）
-  description?: string;           // 功能描述
-  ios?: {                        // iOS 專用設定
+  key: string; // 觸發按鍵
+  modifiers?: Modifier[]; // 輔助按鍵（Ctrl、Alt 等）
+  description?: string; // 功能描述
+  ios?: {
+    // iOS 專用設定
     key?: string;
     modifiers?: Modifier[];
   };
-  action: (context: ActionContext) => void;  // 觸發行為
+  action: (context: ActionContext) => void; // 觸發行為
 }
 
 export const TOOL_HOT_KEYS = {
@@ -89,8 +90,8 @@ export const TOOL_HOT_KEYS = {
 
 // 使用時只需在標註頁面引入 hook：
 function AnnotationPage() {
-  useHotkeys();  // 啟用快捷鍵功能
-  return <main>標註頁面</main>;
+  useHotkeys(); // 啟用快捷鍵功能
+  return 標註頁面;
 }
 ```
 

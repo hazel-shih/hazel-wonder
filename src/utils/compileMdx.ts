@@ -7,11 +7,9 @@ import {
 } from "@/components/Alerts";
 import BlankLink from "@/components/BlankLink";
 import BlogInsertImage from "@/components/BlogInsertImage";
-
 import rehypeCodeTitles from "rehype-code-titles";
-import rehypePrism from "rehype-prism-plus";
-import rehypeHighlight from "rehype-highlight";
 import { ReactElement } from "react";
+import rehypePrettyCode from "rehype-pretty-code";
 
 const components = {
   InfoAlert,
@@ -31,8 +29,7 @@ const compileMdx = async (content: string): Promise<ReactElement> => {
       mdxOptions: {
         rehypePlugins: [
           rehypeCodeTitles,
-          rehypeHighlight,
-          [rehypePrism, { ignoreMissing: true }],
+          [rehypePrettyCode, { theme: "dracula" }],
         ],
       },
     },

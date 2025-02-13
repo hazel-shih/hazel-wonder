@@ -32,9 +32,11 @@ tags: ["內部工具開發", "computer vision", "react", "object detection"]
   height={899}
   description="CVAT 的標註工作區頁面"
 />
-在圖片標註這個領域中，最有名的莫過於開源工具<BlankLink href="https://www.cvat.ai/" text="CVAT（Computer Vision Annotation Tool）" />。它的功能非常多，光是標註類型就有 bounding box、Polygon（多邊形）、Polyline（折線）、Points（關鍵點）、Cuboid（三維立方體）等。
+在圖片標註這個領域中，最有名的莫過於開源工具<BlankLink href="https://www.cvat.ai/" text="CVAT（Computer Vision Annotation Tool）" />。它的功能非常多，光是標註類型就有 bounding box（矩形）、Polygon（多邊形）、Polyline（折線）、Points（關鍵點）、Cuboid（三維立方體）等。
 
-不過對我們團隊來說，日常工作只需要兩個核心功能：在圖影片中框選出人的位置，以及使用關鍵點標記他們的姿態。這落落長如同 photoshop 的工具列讓標註人員們感到困擾，過多的選項和設定讓介面變得複雜，我觀察到他們每次要開始標註時，都需要在滿滿的功能列表中尋找工具，找到工具後開始標註，標完一個物件卻又自動跳回預設的箭頭狀態。這樣的設計完全不符合標註人員們習慣的「標完馬上接著標下一個」的狂標節奏，種種不便讓原本應該順暢的標註工作變得斷斷續續，大大降低了作業效率，也影響到了模型訓練資料的品質。
+不過對我們團隊來說，日常工作只需要兩個核心功能：在圖影片中框選出人的位置，以及使用關鍵點標記他們的姿態。
+
+這落落長如同 photoshop 的工具列讓標註人員們感到困擾，過多的選項和設定讓介面變得複雜，我觀察到他們每次要開始標註時，都需要在滿滿的功能列表中尋找工具，找到工具後開始標註，標完一個物件卻又自動跳回預設的箭頭狀態。這樣的設計完全不符合標註人員們習慣的「標完馬上接著標下一個」的狂標節奏，種種不便讓原本應該順暢的標註工作變得斷斷續續，大大降低了作業效率，也影響到了模型訓練資料的品質。
 
 ### 評估是否要開發一個內部工具
 
@@ -46,7 +48,7 @@ tags: ["內部工具開發", "computer vision", "react", "object detection"]
 
 ## 一段以使用者為中心的開發歷程
 
-經過一連串的前期準備工作 —— 親自體驗標註流程、實際觀察標註人員的工作情形、訪談他們的使用心得，以及了解主管（aka 甲方）對工具的期待，以下我想分享這個標註工具 Anna 的幾個從使用者體驗出發，重點優化的核心功能。
+經過一連串的前期準備工作：親自體驗標註流程、實際觀察標註人員的工作情形、訪談他們的使用心得，以及了解主管（aka 甲方）對工具的期待，以下我想分享這個標註工具 Anna 的幾個從使用者體驗出發，所開發的重點優化核心功能。
 （順帶一提，Anna 這個名字連結了 Annotation 標註的開頭字母，也有一種好朋友的親民感 XD，故以此名稱之）
 
 此工具前端選用的技術為 React、Redux、Typescript、<BlankLink href="https://d3js.org/" text="D3.js" />，以<BlankLink href="https://mui.com/material-ui/" text="Material UI" />為元件基底並以<BlankLink href="https://emotion.sh/docs/introduction" text="emotion css" />去客製元件樣式。
@@ -65,6 +67,7 @@ tags: ["內部工具開發", "computer vision", "react", "object detection"]
 ### 快捷鍵
 
 ```typescript
+// 定義快捷鍵設定的介面
 interface HotKeyConfig {
   key: string; // 觸發按鍵
   modifiers?: Modifier[]; // 輔助按鍵（Ctrl、Alt 等）
@@ -77,6 +80,7 @@ interface HotKeyConfig {
   action: (context: ActionContext) => void; // 觸發行為
 }
 
+// 快捷鍵設定範例
 export const TOOL_HOT_KEYS = {
   Cursor: {
     key: "C",
@@ -88,10 +92,40 @@ export const TOOL_HOT_KEYS = {
   // 其他工具的快捷鍵設定...
 };
 
-// 使用時只需在標註頁面引入 hook：
+// 實作快捷鍵 Hook
+const useHotkeys = () => {
+  const dispatch = useAppDispatch();
+  const actionContext = useMemo(
+    () => ({
+      dispatch,
+      // 其他需要的 context...
+    }),
+    [dispatch]
+  );
+
+  // 處理按鍵事件
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      Object.entries(TOOL_HOT_KEYS).forEach(([tool, config]) => {
+        if (isHotKeyPressed(event, config)) {
+          config.action(actionContext);
+        }
+      });
+    },
+    [actionContext]
+  );
+
+  // 註冊/移除事件監聽
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
+};
+
+// 使用方式
 function AnnotationPage() {
   useHotkeys(); // 啟用快捷鍵功能
-  return 標註頁面;
+  return <>標註頁面內容</>;
 }
 ```
 
@@ -108,7 +142,11 @@ function AnnotationPage() {
   height={908}
   description="用 mock data 示意 50 個框交疊在一起的情形，選取特定的框變得很困難"
 />
-當圖片中的物件太多（尤其是小物件），許多的標註框會互相交疊在一起，造成選取目標框的困難。根據觀察，標註者會傾向以游標靠近框的四個角落或中心點來選取到框，因此在處理多個重疊的標註框時，我採用了一個直覺的距離判定方法：當游標同時進入多個重疊的標註框時，系統會計算游標位置到每個框的五個關鍵點（四個角落和中心點）的距離。透過比較這些最短距離，系統會選擇距離最近的標註框作為使用者想要操作的目標。以此方式優化後，即使許多框交疊在一起，標註者仍可以輕鬆地選到想要編輯的框。
+當圖片中的物件太多（尤其是小物件），許多的標註框會互相交疊在一起，造成選取目標框的困難。
+
+根據觀察，標註者會傾向以游標靠近框的四個角落或中心點來選取到框，因此在處理多個重疊的標註框時，我採用了一個直覺的距離判定方法：當游標同時進入多個重疊的標註框時，系統會計算游標位置到每個框的五個關鍵點（四個角落和中心點）的距離。
+
+透過比較這些最短距離，系統會選擇距離最近的標註框作為使用者想要操作的目標。以此方式優化後，即使許多框交疊在一起，標註者仍可以輕鬆地選到想要編輯的框。
 
 ### 避免標註超出圖片之外的防呆
 
@@ -120,9 +158,9 @@ function AnnotationPage() {
   src="/articles/tech/side-project-anna/over2.png"
   alt="over image bounding - 2"
 />
-當標註者的標註範圍或是拉動標註框的編輯點超出圖片時，系統會自動修正將框的範圍修正至圖片中。這個修正機制主要透過計算標註框的新位置來實現：首先計算游標的移動距離（dx,
-dy），再根據標註框的寬度和高度，確保框的邊界不會低於 0
-或超過圖片的邊界，透過限制標註點的座標值，讓標註範圍始終保持在圖片範圍內。這樣的設計不僅能防止標註框超出可視範圍，也能讓標註過程更精確。
+當標註者的標註範圍或是拉動標註框的編輯點超出圖片時，系統會自動修正將框的範圍修正至圖片中。
+
+這個修正機制主要透過計算標註框的新位置來實現：首先計算游標的移動距離（dx, dy），再根據標註框的寬度和高度，確保框的邊界不會低於 0 或超過圖片的邊界，透過限制標註點的座標值，讓標註範圍始終保持在圖片範圍內。這樣的設計不僅能防止標註框超出可視範圍，也能讓標註過程更精確。
 
 ### 圖片縮放（zoom in & zoom out）功能
 
@@ -137,7 +175,7 @@ dy），再根據標註框的寬度和高度，確保框的邊界不會低於 0
 
 為了讓使用者能夠精確地標註不同尺寸的物件，我實作了縮放圖片的功能。使用者可以透過滑鼠滾輪來放大或縮小畫面，方便處理圖片中的大型物件和細節，此外只要雙擊畫面就能立即回到圖片原始尺寸。
 
-在技術實現上，使用 D3.js 的縮放行為（zoom behavior）來處理複雜的縮放邏輯。使用 `useZoom` hook 來管理縮放狀態，它同時控制了圖片畫布（Canvas）和標註層（SVG）的縮放同步。為了確保效能，也使用了 requestAnimationFrame 來處理變形更新，並加入了 debounce 機制來減少不必要的狀態更新。
+在技術實現上，使用 D3.js 的縮放行為（zoom behavior）來處理複雜的縮放邏輯。使用 `useZoom` hook 來管理縮放狀態，它同時控制了圖片畫布（Canvas）和標註層（SVG）的縮放同步。為了確保效能，也使用了<BlankLink href="https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame" text="requestAnimationFrame" />來處理變形更新，並加入了 debounce 機制來減少不必要的狀態更新。
 
 ### 其他零星功能
 
@@ -149,4 +187,4 @@ dy），再根據標註框的寬度和高度，確保框的邊界不會低於 0
 
 我很開心參與了這個工具的發想、功能規劃，以及前端開發。這個過程讓我不只擔任開發者的角色，更體驗到擔任類似 PM 的角色，去蒐集使用者的實際回饋、平衡不同角色對工具的期待，各方仔細權衡後才能決定工具的發展方向。
 
-不過最開心的莫過於看到這個工具確實為團隊帶來幫助。能夠開發出對他人有實質幫助的工具，讓工作流程更加順暢，我想這就是身為開發者最大的成就感了 —— 看到自己開發的工具為他人帶來正向的影響，並且持續創造價值 💪🏻
+不過最開心的莫過於看到這個工具確實為團隊帶來幫助。能夠開發出對他人有實質幫助的工具，讓工作流程更加順暢，我想這就是身為開發者最大的成就感了 —— 看到自己開發的工具為他人帶來正向的影響，並且持續創造價值 😎💪🏻

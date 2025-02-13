@@ -9,6 +9,7 @@ picture: /articles/tech/side-project-anna/1.png
 alt: side-project-anna
 width: 1724
 height: 804
+img_description: Anna 標註工具的標註工作區頁面
 tags: ["內部工具開發", "computer vision", "react", "object detection"]
 ---
 
@@ -27,8 +28,11 @@ tags: ["內部工具開發", "computer vision", "react", "object detection"]
 <BlogInsertImage
   src="/articles/tech/side-project-anna/cvat.png"
   alt="CVAT interface"
+  width={1920}
+  height={899}
+  description="CVAT 的標註工作區頁面"
 />
-在圖片標註這個領域中，最有名的莫過於開源工具<BlankLink href="https://www.cvat.ai/" text="CVAT（Computer Vision Annotation Tool" />。它的功能非常多，光是標註類型就有 bounding box、Polygon（多邊形）、Polyline（折線）、Points（關鍵點）、Cuboid（三維立方體）等。
+在圖片標註這個領域中，最有名的莫過於開源工具<BlankLink href="https://www.cvat.ai/" text="CVAT（Computer Vision Annotation Tool）" />。它的功能非常多，光是標註類型就有 bounding box、Polygon（多邊形）、Polyline（折線）、Points（關鍵點）、Cuboid（三維立方體）等。
 
 不過對我們團隊來說，日常工作只需要兩個核心功能：在圖影片中框選出人的位置，以及使用關鍵點標記他們的姿態。這落落長如同 photoshop 的工具列讓標註人員們感到困擾，過多的選項和設定讓介面變得複雜，我觀察到他們每次要開始標註時，都需要在滿滿的功能列表中尋找工具，找到工具後開始標註，標完一個物件卻又自動跳回預設的箭頭狀態。這樣的設計完全不符合標註人員們習慣的「標完馬上接著標下一個」的狂標節奏，種種不便讓原本應該順暢的標註工作變得斷斷續續，大大降低了作業效率，也影響到了模型訓練資料的品質。
 
@@ -52,6 +56,9 @@ tags: ["內部工具開發", "computer vision", "react", "object detection"]
 <BlogInsertImage
   src="/articles/tech/side-project-anna/project-list.png"
   alt="Anna project list"
+  width={1430}
+  height={924}
+  description="Anna 的專案列表頁"
 />
 內部標註流程為標註者匯入圖片創建專案後（New），開始進行圖片標註（Annotating），標註完成後需讓另一個標註人員檢視標註成果（Reviewing），修正問題後完成整個專案的標註（Complete），而完成標註的專案才能將標註結果匯出成模型需要的訓練資料。在專案列表除了會顯示上述提及的專案狀態，也顯示最後更新時間讓管理者知道此專案的標註進度是否持續被更新。
 
@@ -96,6 +103,9 @@ function AnnotationPage() {
 <BlogInsertImage
   src="/articles/tech/side-project-anna/crowded-boxes.png"
   alt="crowded boxes"
+  width={1603}
+  height={908}
+  description="用 mock data 示意 50 個框交疊在一起的情形，選取特定的框變得很困難"
 />
 當圖片中的物件太多（尤其是小物件），許多的標註框會互相交疊在一起，造成選取目標框的困難。根據觀察，標註者會傾向以游標靠近框的四個角落或中心點來選取到框，因此在處理多個重疊的標註框時，我採用了一個直覺的距離判定方法：當游標同時進入多個重疊的標註框時，系統會計算游標位置到每個框的五個關鍵點（四個角落和中心點）的距離。透過比較這些最短距離，系統會選擇距離最近的標註框作為使用者想要操作的目標。以此方式優化後，即使許多框交疊在一起，標註者仍可以輕鬆地選到想要編輯的框。
 

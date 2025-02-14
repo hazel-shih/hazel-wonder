@@ -37,6 +37,15 @@ body {
   letter-spacing: 0.2;
 }
 
+::selection {
+	background: #d8c4b6;
+	color: #3D3D3D;
+}
+::-moz-selection {
+	background: #d8c4b6;
+	color:  #3D3D3D;
+}
+
 main {
   padding: 20px 0 60px 0;
 }

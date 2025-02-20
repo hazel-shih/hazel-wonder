@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hazel 的個人網站 - Hazel Wonder
 
-## Getting Started
+### 從零開發個人作品集網站，實作客製化元件，建立包含首頁、關於我、部落格等頁面
 
-First, run the development server:
+[造訪 Hazel Wonder 請點我 🙆‍♀️]([https://zuna.tw](https://hazelwonder.me/))
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 功能與特色
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+① 設計 MDX 文章管理系統，自動解析 frontmatter 生成 SEO meta tags、更新 sitemap，建立個人化文章編輯流程
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+② 注重閱讀體驗優化，設計排版與配色，實現響應式設計與文章分類快速導航，建立舒適的內容閱讀環境
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 技術與工具使用
 
-## Learn More
+#### 前端
 
-To learn more about Next.js, take a look at the following resources:
+① 使用 create-next-app (with TypeScript) 建置環境
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+② 樣式：SCSS
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+③ React function component & hooks
